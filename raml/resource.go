@@ -263,10 +263,10 @@ func substituteParams(toReplace, words string, dicts map[string]interface{}) str
 
 // get value of a resource type param
 func getParamValue(param string, dicts map[string]interface{}) string {
-	// split between inflector and real param
-	// real param and inflector is seperated by `|`
-	cleanParam, inflector := func() (string, string) {
-		arr := strings.Split(param, "|")
+	// split between inflectors and real param
+	// real param and each inflector is seperated by `|`
+	cleanParam, inflectors := func() (string, string) {
+		arr := strings.SplitN(param, "|", 2)
 		if len(arr) != 2 {
 			return param, ""
 		}
@@ -284,11 +284,13 @@ func getParamValue(param string, dicts map[string]interface{}) string {
 	}()
 
 	// inflect the value if needed
-	if inflector != "" {
-		var ok bool
-		val, ok = doInflect(val, inflector)
-		if !ok {
-			log.Fatalf("invalid inflector " + inflector)
+	if inflectors != "" {
+		for _, inflector := range strings.Split(inflectors, "|") {
+			var ok bool
+			val, ok = doInflect(val, inflector)
+			if !ok {
+				log.Fatalf("invalid inflector " + inflector)
+			}
 		}
 	}
 	return val
