@@ -15,7 +15,7 @@ resourceTypes:
             body:
               type: <<resourcePathName>> # e.g. Users
       post:
-        description: Create a new <<resourcePathName | !singularize>>
+        description: Create a new <<resourcePathName | !singularize|!uppercamelcase>>
         body:
           application/json:
             type: <<resourcePathName | !singularize>>
