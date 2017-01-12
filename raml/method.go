@@ -341,6 +341,8 @@ func (b *Bodies) inherit(parent Bodies, dicts map[string]interface{}) {
 	if parent.ApplicationJSON != nil {
 		if b.ApplicationJSON == nil { // allocate if needed
 			b.ApplicationJSON = &BodiesProperty{Properties: map[string]interface{}{}}
+		} else if b.ApplicationJSON.Properties == nil {
+			b.ApplicationJSON.Properties = map[string]interface{}{}
 		}
 
 		b.ApplicationJSON.Type = substituteParams(b.ApplicationJSON.Type, parent.ApplicationJSON.Type, dicts)
