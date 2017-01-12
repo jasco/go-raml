@@ -286,6 +286,7 @@ func getParamValue(param string, dicts map[string]interface{}) string {
 	// inflect the value if needed
 	if inflectors != "" {
 		for _, inflector := range strings.Split(inflectors, "|") {
+            inflector = strings.TrimSpace(inflector)
 			var ok bool
 			val, ok = doInflect(val, inflector)
 			if !ok {
